@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-red
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      color: red
+  template:
+    metadata:
+      labels:
+        color: red
+    spec:
+      containers:
+      - name: ctn-red
+        image: dhdtl12/keduitlab:red
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+        - name:  myrepo
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: red-lb
+spec:
+  selector:
+    color: red
+  ports:
+  - port: 80
+    targetPort: 80
+  type: LoadBalancer
