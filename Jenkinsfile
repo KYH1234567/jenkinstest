@@ -18,8 +18,8 @@ pipeline {
     stage('deploy and service') {
       steps {
         sh '''
-        ansible-playbook /root/to_node.yml
-        ansible-playbook /root/to_master.yml 
+        ansible-playbook /var/lib/jenkins/to_node.yml
+        ansible-playbook /var/lib/jenkins/to_master.yml 
         '''
       }
     }
